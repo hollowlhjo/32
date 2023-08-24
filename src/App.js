@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Greeting(props) {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [inputValue, setInputValue] = useState(''); // Додайте стан для збереження введеного імені
+
+  const handleLogin = () => {
+    setFullName(inputValue);
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setFullName('');
+    setLoggedIn(false);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  if (loggedIn) {
+    return (
+      <div>
+        <p>Ласкаво просимо, {fullName}!</p>
+        <button onClick={handleLogout}>Вийти з облікового запису</button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <p>Будь ласка, увійдіть в обліковий запис.</p>
+        <input
+          type="text"
+          placeholder="Введіть ваше ім'я"
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleLogin}>Увійти в обліковий запис</button>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default Greeting;
